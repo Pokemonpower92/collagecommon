@@ -11,7 +11,7 @@ import (
 )
 
 type ISDBConfig struct {
-	URI      string
+	Host     string
 	User     string
 	Password string
 	Port     string
@@ -27,7 +27,7 @@ func NewImageSetDB(conf ISDBConfig) (*ImageSetDB, error) {
 	connString := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable",
 		conf.User,
 		conf.Password,
-		conf.URI,
+		conf.Host,
 		conf.Port,
 		conf.DbName,
 	)

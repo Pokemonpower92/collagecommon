@@ -24,7 +24,7 @@ type TestISDB struct {
 
 func SetupTestISDB() *TestISDB {
 	conf := ISDBConfig{
-		URI:      "localhost",
+		Host:     "localhost",
 		User:     "postgres",
 		Password: "postgres",
 		Port:     "5432",
@@ -50,7 +50,7 @@ func SetupTestISDB() *TestISDB {
 	if err != nil {
 		log.Fatal("Failed to get host: ", err)
 	}
-	conf.URI = host
+	conf.Host = host
 
 	err = migrateTestDB(conf)
 	if err != nil {
@@ -106,7 +106,7 @@ func migrateTestDB(conf ISDBConfig) error {
 	connString := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable",
 		conf.User,
 		conf.Password,
-		conf.URI,
+		conf.Host,
 		conf.Port,
 		conf.DbName,
 	)

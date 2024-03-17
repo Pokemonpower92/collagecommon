@@ -40,8 +40,17 @@ func TestSetAverageColors(t *testing.T) {
 }
 
 func TestGetImageSet(t *testing.T) {
-	_, err := testDb.GetImageSet(1)
+	is, err := testDb.GetImageSet(1)
 	if err != nil {
 		t.Errorf("Error getting imageset: %v", err)
+	}
+	if is.Name != "test" {
+		t.Errorf("Expected name to be test, got %s", is.Name)
+	}
+	if is.Description != "test" {
+		t.Errorf("Expected description to be test, got %s", is.Description)
+	}
+	if len(is.AverageColors) != 2 {
+		t.Errorf("Expected 2 average colors, got %d", len(is.AverageColors))
 	}
 }
