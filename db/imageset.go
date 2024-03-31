@@ -38,7 +38,7 @@ func NewImageSetDB(conf ISDBConfig) (*ImageSetDB, error) {
 
 	return &ImageSetDB{
 		client: client,
-		l:      log.New(log.Writer(), "imageset-db", log.LstdFlags),
+		l:      log.New(log.Writer(), "imageset-db ", log.LstdFlags),
 	}, nil
 }
 
