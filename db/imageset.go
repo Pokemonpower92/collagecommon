@@ -15,7 +15,7 @@ type ImageSetDB struct {
 	l      *log.Logger
 }
 
-func NewImageSetDB(conf DBConfig) (*ImageSetDB, error) {
+func NewImageSetDB(conf types.DBConfig) (*ImageSetDB, error) {
 	connString := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable",
 		conf.User,
 		conf.Password,
