@@ -1,14 +1,15 @@
-package db
+package db_test
 
 import (
 	"image/color"
 	"os"
 	"testing"
 
+	"github.com/pokemonpower92/collagecommon/db"
 	"github.com/pokemonpower92/collagecommon/types"
 )
 
-var testDb *ImageSetDB
+var testDb *db.ImageSetDB
 
 func TestMain(m *testing.M) {
 	testDB := SetupTestISDB()

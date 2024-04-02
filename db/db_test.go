@@ -1,4 +1,4 @@
-package db
+package db_test
 
 import (
 	"context"
@@ -13,17 +13,18 @@ import (
 	_ "github.com/golang-migrate/migrate/v4/database/postgres" // used by migrator
 	_ "github.com/golang-migrate/migrate/v4/source/file"       // used by migrator
 	_ "github.com/jackc/pgx/v4/stdlib"                         // used by migrator
+	"github.com/pokemonpower92/collagecommon/db"
 	"github.com/testcontainers/testcontainers-go"
 	"github.com/testcontainers/testcontainers-go/wait"
 )
 
 type TestISDB struct {
-	DB        *ImageSetDB
+	DB        *db.ImageSetDB
 	container testcontainers.Container
 }
 
 func SetupTestISDB() *TestISDB {
-	conf := ISDBConfig{
+	conf := db.DBConfig{
 		Host:     "localhost",
 		User:     "postgres",
 		Password: "postgres",
@@ -57,7 +58,7 @@ func SetupTestISDB() *TestISDB {
 		log.Fatal("Failed to migrate test db: ", err)
 	}
 
-	db, err := NewImageSetDB(conf)
+	db, err := db.NewImageSetDB(conf)
 	if err != nil {
 		log.Fatal("Failed to setup test imageset db", err)
 	}
@@ -71,7 +72,7 @@ func (tdb *TestISDB) TearDown() {
 	_ = tdb.container.Terminate(context.Background())
 }
 
-func createContainer(ctx context.Context, conf ISDBConfig) (testcontainers.Container, error) {
+func createContainer(ctx context.Context, conf db.DBConfig) (testcontainers.Container, error) {
 	req := testcontainers.GenericContainerRequest{
 		ContainerRequest: testcontainers.ContainerRequest{
 			Image:        "postgres:14-alpine",
@@ -96,7 +97,7 @@ func createContainer(ctx context.Context, conf ISDBConfig) (testcontainers.Conta
 	return container, nil
 }
 
-func migrateTestDB(conf ISDBConfig) error {
+func migrateTestDB(conf db.DBConfig) error {
 	_, path, _, ok := runtime.Caller(0)
 	if !ok {
 		return fmt.Errorf("failed to get path")

@@ -10,20 +10,12 @@ import (
 	"github.com/pokemonpower92/collagecommon/types"
 )
 
-type ISDBConfig struct {
-	Host     string
-	User     string
-	Password string
-	Port     string
-	DbName   string
-}
-
 type ImageSetDB struct {
 	client *pgxpool.Pool
 	l      *log.Logger
 }
 
-func NewImageSetDB(conf ISDBConfig) (*ImageSetDB, error) {
+func NewImageSetDB(conf DBConfig) (*ImageSetDB, error) {
 	connString := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable",
 		conf.User,
 		conf.Password,
